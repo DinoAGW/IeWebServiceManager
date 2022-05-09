@@ -7,7 +7,7 @@ import com.exlibris.dps.sdk.pds.HeaderHandlerResolver;
 
 public class IeHelper {
 	static final String fs = System.getProperty("file.separator");
-	
+
 	private static String defaultRosettaURL(String rosettaInstance) throws Exception {
 		if (rosettaInstance.equals("dev")) {
 			return "https://rosetta.develop.lza.tib.eu";
@@ -20,7 +20,7 @@ public class IeHelper {
 			throw new Exception();
 		}
 	}
-	
+
 	private static String defaultInstitution(String rosettaInstance) throws Exception {
 		if (rosettaInstance.equals("dev")) {
 			return "ZBM";
@@ -33,7 +33,7 @@ public class IeHelper {
 			throw new Exception();
 		}
 	}
-	
+
 	private static String defaultUserName(String rosettaInstance) throws Exception {
 		if (rosettaInstance.equals("dev")) {
 			return "SubApp ZB MED";
@@ -46,7 +46,7 @@ public class IeHelper {
 			throw new Exception();
 		}
 	}
-	
+
 	private static String defaultPassword(String rosettaInstance) throws Exception {
 		if (rosettaInstance.equals("dev")) {
 			String propertyDateiPfad = System.getProperty("user.home").concat(fs).concat("Rosetta_Properties.txt");
@@ -65,13 +65,13 @@ public class IeHelper {
 			throw new Exception();
 		}
 	}
-	
+
 	private static String defaultIE_WSDL_URL(String rosettaURL) {
 		return rosettaURL.concat("/dpsws/repository/IEWebServices?wsdl");
 	}
-	
+
 	public static String getIE(String iePid, String rosettaInstance) throws Exception {
-		if (!rosettaInstance.contentEquals("prod") ) {
+		if (!rosettaInstance.contentEquals("prod")) {
 			System.err.println("Bisher ist nur prod unterstützt.");
 			throw new Exception();
 		}
@@ -84,20 +84,26 @@ public class IeHelper {
 		IEWebServices_Service ieWS = new IEWebServices_Service(new URL(IE_WSDL_URL),
 				new QName("http://dps.exlibris.com/", "IEWebServices"));
 		ieWS.setHandlerResolver(new HeaderHandlerResolver(userName, password, institution));
-		
+
 		Boolean repeat = true;
 		String retval = null;
 		while (repeat) {
 			try {
+				Thread.sleep(1000);
 				retval = ieWS.getIEWebServicesPort().getIE(0L, iePid, null);
 				repeat = false;
 			} catch (Exception e) {
 				System.err.println("getIE fehlgeschlagen");
-				Thread.sleep(1000);
 			}
 		}
 		if (retval == null) {
 			System.err.println("getIE ergab Nullantwort");
+			throw new Exception();
+		}
+		String test = "                <record>\n                  <key id=\"internalIdentifierType\">PID</key>\n                  <key id=\"internalIdentifierValue\">"
+				+ iePid + "</key>\n                </record>";
+		if (!retval.contains(test)) {
+			System.err.println("getIE Antwort hat Test nicht bestanden.");
 			throw new Exception();
 		}
 		return retval;
