@@ -19,15 +19,38 @@
 	</build>
 	<dependencies>
 		<dependency>
-			<!-- wird für import com.exlibris.dps.sdk.pds.HeaderHandlerResolver
-			gebraucht -->
-			<groupId>com.exlibris</groupId>
-			<artifactId>sdk</artifactId>
-			<version>7.3.0</version>
-			<!--			<scope>system</scope>-->
-			<!--
-			<systemPath>${project.basedir}/lib/dps-sdk-7.1.0.jar</systemPath>-->
+            <groupId>jakarta.xml.ws</groupId>
+            <artifactId>jakarta.xml.ws-api</artifactId>
+            <version>2.3.3</version>
+        </dependency>
+		<!-- https://mvnrepository.com/artifact/com.sun.xml.ws/jaxws-rt -->
+		<dependency>
+			<groupId>com.sun.xml.ws</groupId>
+			<artifactId>jaxws-rt</artifactId>
+			<version>4.0.1</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.sun.xml.ws/rt -->
+		<dependency>
+			<groupId>com.sun.xml.ws</groupId>
+			<artifactId>rt</artifactId>
+			<version>4.0.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.sun.xml.ws/jaxws-ri -->
+		<dependency>
+			<groupId>com.sun.xml.ws</groupId>
+			<artifactId>jaxws-ri</artifactId>
+			<version>4.0.1</version>
+			<type>pom</type>
+		</dependency>
+<!--		<dependency>-->
+<!--			 wird für import com.exlibris.dps.sdk.pds.HeaderHandlerResolver-->
+<!--			gebraucht -->
+<!--			<groupId>com.exlibris</groupId>-->
+<!--			<artifactId>sdk</artifactId>-->
+<!--			<version>7.3.0</version>-->
+<!--			<scope>system</scope>-->
+<!--			<systemPath>${project.basedir}/lib/dps-sdk-7.3.0.jar</systemPath>-->
+<!--		</dependency>-->
 		<dependency>
 			<!-- wird für Base64 gebraucht -->
 			<groupId>commons-codec</groupId>
@@ -40,25 +63,5 @@
 			<artifactId>jaxws-api</artifactId>
 			<version>2.3.1</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.sun.xml.ws/jaxws-rt -->
-<!--		<dependency>-->
-<!--			<groupId>com.sun.xml.ws</groupId>-->
-<!--			<artifactId>jaxws-rt</artifactId>-->
-<!--			<version>4.0.1</version>-->
-<!--		</dependency>-->
-		<!-- https://mvnrepository.com/artifact/com.sun.xml.ws/jaxws-ri -->
-<!--		<dependency>-->
-<!--			<groupId>com.sun.xml.ws</groupId>-->
-<!--			<artifactId>jaxws-ri</artifactId>-->
-<!--			<version>4.0.1</version>-->
-<!--			<type>pom</type>-->
-<!--		</dependency>-->
-		<!-- https://mvnrepository.com/artifact/com.sun.xml.ws/rt -->
-<!--		<dependency>-->
-<!--			<groupId>com.sun.xml.ws</groupId>-->
-<!--			<artifactId>rt</artifactId>-->
-<!--			<version>4.0.1</version>-->
-<!--		</dependency>-->
-
 	</dependencies>
 </project>
