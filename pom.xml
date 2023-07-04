@@ -24,14 +24,6 @@
 	</build>
 	<dependencies>
 		<dependency>
-			<!-- wird für import com.exlibris.dps.sdk.pds.HeaderHandlerResolver gebraucht -->
-			<groupId>com.exlibris</groupId>
-			<artifactId>sdk</artifactId>
-			<version>7.1.0</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/dps-sdk-7.1.0.jar</systemPath>
-		</dependency>
-		<dependency>
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api</artifactId>
 			<version>${jaxb.api.version}</version>
@@ -46,11 +38,6 @@
 			<artifactId>jaxb-core</artifactId>
 			<version>${jaxb.core.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.sun.xml.ws</groupId>
-			<artifactId>jaxws-rt</artifactId>
-			<version>${jaxrs.version}</version>
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.sun.xml.ws/rt -->
 		<dependency>
 			<groupId>com.sun.xml.ws</groupId>
@@ -63,6 +50,21 @@
 			<artifactId>jaxws-ri</artifactId>
 			<version>${jaxrs.version}</version>
 			<type>pom</type>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/javax.xml.ws/jaxws-api -->
+		<dependency>
+			<groupId>javax.xml.ws</groupId>
+			<artifactId>jaxws-api</artifactId>
+			<version>2.3.1</version>
+		</dependency>
+		<!-- wird für import com.exlibris.dps.sdk.pds.HeaderHandlerResolver-->
+		<!-- gebraucht -->
+		<dependency>
+			<groupId>com.exlibris</groupId>
+			<artifactId>sdk</artifactId>
+			<version>7.3.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/dps-sdk-7.3.0.jar</systemPath>
 		</dependency>
 	</dependencies>
 </project>
