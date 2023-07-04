@@ -5,8 +5,13 @@
 	<groupId>de.zbmed</groupId>
 	<artifactId>IeWebServiceManager</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<properties>
+		<jaxb.api.version>2.3.0</jaxb.api.version>
+		<jaxb.impl.version>2.3.0</jaxb.impl.version>
+		<jaxb.core.version>2.3.0</jaxb.core.version>
+		<jaxrs.version>2.3.6</jaxrs.version>
+	</properties>
 	<build>
-		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -27,10 +32,37 @@
 			<systemPath>${project.basedir}/lib/dps-sdk-7.1.0.jar</systemPath>
 		</dependency>
 		<dependency>
-			<!-- wird für Base64 gebraucht -->
-			<groupId>commons-codec</groupId>
-			<artifactId>commons-codec</artifactId>
-			<version>1.10</version>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>${jaxb.api.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>${jaxb.impl.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-core</artifactId>
+			<version>${jaxb.core.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.ws</groupId>
+			<artifactId>jaxws-rt</artifactId>
+			<version>${jaxrs.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.sun.xml.ws/rt -->
+		<dependency>
+			<groupId>com.sun.xml.ws</groupId>
+			<artifactId>rt</artifactId>
+			<version>${jaxrs.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.sun.xml.ws/jaxws-ri -->
+		<dependency>
+			<groupId>com.sun.xml.ws</groupId>
+			<artifactId>jaxws-ri</artifactId>
+			<version>${jaxrs.version}</version>
+			<type>pom</type>
 		</dependency>
 	</dependencies>
 </project>
