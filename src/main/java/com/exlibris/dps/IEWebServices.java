@@ -31,8 +31,8 @@ public interface IEWebServices {
      * @param pdsHandle
      * @return
      *     returns java.util.List<com.exlibris.dps.MetaData>
-     * @throws IEWSException_Exception
      * @throws UserAuthorizeException_Exception
+     * @throws IEWSException_Exception
      */
     @WebMethod
     @WebResult(name = "getSharedMDByType", targetNamespace = "")
@@ -53,8 +53,8 @@ public interface IEWebServices {
      * @param commit
      * @param event
      * @param pdsHandle
-     * @throws LockedIeException_Exception
      * @throws FixityEventException_Exception
+     * @throws LockedIeException_Exception
      * @throws UserAuthorizeException_Exception
      */
     @WebMethod
@@ -74,11 +74,11 @@ public interface IEWebServices {
      * 
      * @param metadata
      * @param pdsHandle
-     * @throws IEWSException_Exception
-     * @throws InvalidMIDException_Exception
-     * @throws UserAuthorizeException_Exception
-     * @throws InvalidTypeException_Exception
      * @throws InvalidXmlException_Exception
+     * @throws UserAuthorizeException_Exception
+     * @throws IEWSException_Exception
+     * @throws InvalidTypeException_Exception
+     * @throws InvalidMIDException_Exception
      */
     @WebMethod
     @RequestWrapper(localName = "updateSharedMD", targetNamespace = "http://dps.exlibris.com/", className = "com.exlibris.dps.UpdateSharedMD")
@@ -96,13 +96,13 @@ public interface IEWebServices {
      * @param metadata
      * @param iePID
      * @param pdsHandle
+     * @throws InvalidXmlException_Exception
+     * @throws UserAuthorizeException_Exception
      * @throws LockedIeException_Exception
      * @throws IEWSException_Exception
-     * @throws NotInPermanentException_Exception
      * @throws InvalidMIDException_Exception
-     * @throws UserAuthorizeException_Exception
      * @throws InvalidTypeException_Exception
-     * @throws InvalidXmlException_Exception
+     * @throws NotInPermanentException_Exception
      */
     @WebMethod
     @RequestWrapper(localName = "updateIEMD", targetNamespace = "http://dps.exlibris.com/", className = "com.exlibris.dps.UpdateIEMD")
@@ -124,8 +124,8 @@ public interface IEWebServices {
      * @param pdsHandle
      * @return
      *     returns java.lang.String
-     * @throws IEWSException_Exception
      * @throws UserAuthorizeException_Exception
+     * @throws IEWSException_Exception
      */
     @WebMethod
     @WebResult(name = "getIE", targetNamespace = "")
@@ -149,8 +149,8 @@ public interface IEWebServices {
      * @param pdsHandle
      * @return
      *     returns java.util.List<com.exlibris.dps.MetaData>
-     * @throws IEWSException_Exception
      * @throws UserAuthorizeException_Exception
+     * @throws IEWSException_Exception
      */
     @WebMethod
     @WebResult(name = "getSharedMD", targetNamespace = "")
@@ -177,9 +177,9 @@ public interface IEWebServices {
      * @param pdsHandle
      * @return
      *     returns java.lang.String
+     * @throws UserAuthorizeException_Exception
      * @throws IEWSException_Exception
      * @throws NotInPermanentException_Exception
-     * @throws UserAuthorizeException_Exception
      */
     @WebMethod
     @WebResult(name = "getMD", targetNamespace = "")
@@ -205,13 +205,13 @@ public interface IEWebServices {
      * @param commit
      * @param pid
      * @param pdsHandle
+     * @throws InvalidXmlException_Exception
+     * @throws UserAuthorizeException_Exception
      * @throws LockedIeException_Exception
      * @throws IEWSException_Exception
-     * @throws NotInPermanentException_Exception
-     * @throws InvalidMIDException_Exception
-     * @throws UserAuthorizeException_Exception
      * @throws InvalidTypeException_Exception
-     * @throws InvalidXmlException_Exception
+     * @throws InvalidMIDException_Exception
+     * @throws NotInPermanentException_Exception
      */
     @WebMethod
     @RequestWrapper(localName = "updateMD", targetNamespace = "http://dps.exlibris.com/", className = "com.exlibris.dps.UpdateMD")
@@ -236,13 +236,13 @@ public interface IEWebServices {
      * @param content
      * @return
      *     returns java.lang.String
-     * @throws LockedIeException_Exception
-     * @throws IEWSException_Exception
-     * @throws NotInPermanentException_Exception
-     * @throws InvalidMIDException_Exception
-     * @throws UserAuthorizeException_Exception
-     * @throws InvalidTypeException_Exception
      * @throws InvalidXmlException_Exception
+     * @throws LockedIeException_Exception
+     * @throws UserAuthorizeException_Exception
+     * @throws IEWSException_Exception
+     * @throws InvalidMIDException_Exception
+     * @throws InvalidTypeException_Exception
+     * @throws NotInPermanentException_Exception
      */
     @WebMethod
     @WebResult(name = "updateDNX", targetNamespace = "")
@@ -266,11 +266,11 @@ public interface IEWebServices {
      * @param mid
      * @param pid
      * @param pdsHandle
+     * @throws UserAuthorizeException_Exception
      * @throws LockedIeException_Exception
      * @throws IEWSException_Exception
-     * @throws NotInPermanentException_Exception
      * @throws InvalidMIDException_Exception
-     * @throws UserAuthorizeException_Exception
+     * @throws NotInPermanentException_Exception
      */
     @WebMethod
     @RequestWrapper(localName = "assignSharedMD", targetNamespace = "http://dps.exlibris.com/", className = "com.exlibris.dps.AssignSharedMD")
@@ -304,10 +304,10 @@ public interface IEWebServices {
      * @param pdsHandle
      * @return
      *     returns java.lang.String
-     * @throws IEWSException_Exception
-     * @throws UserAuthorizeException_Exception
-     * @throws InvalidTypeException_Exception
      * @throws InvalidXmlException_Exception
+     * @throws UserAuthorizeException_Exception
+     * @throws IEWSException_Exception
+     * @throws InvalidTypeException_Exception
      */
     @WebMethod
     @WebResult(name = "createSharedMD", targetNamespace = "")
@@ -328,9 +328,9 @@ public interface IEWebServices {
      * @param pdsHandle
      * @return
      *     returns java.lang.String
+     * @throws UserAuthorizeException_Exception
      * @throws IEWSException_Exception
      * @throws NotInPermanentException_Exception
-     * @throws UserAuthorizeException_Exception
      */
     @WebMethod
     @WebResult(name = "getDNX", targetNamespace = "")
@@ -357,14 +357,14 @@ public interface IEWebServices {
      * @param pdsHandle
      * @return
      *     returns long
-     * @throws LockedIeException_Exception
-     * @throws IEWSException_Exception
      * @throws FixityEventException_Exception
-     * @throws NotInPermanentException_Exception
-     * @throws InvalidMIDException_Exception
-     * @throws UserAuthorizeException_Exception
-     * @throws InvalidTypeException_Exception
      * @throws InvalidXmlException_Exception
+     * @throws LockedIeException_Exception
+     * @throws UserAuthorizeException_Exception
+     * @throws IEWSException_Exception
+     * @throws InvalidTypeException_Exception
+     * @throws InvalidMIDException_Exception
+     * @throws NotInPermanentException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
@@ -394,8 +394,8 @@ public interface IEWebServices {
      * @param pdsHandle
      * @return
      *     returns com.exlibris.dps.RipStatusInfo
-     * @throws IEWSException_Exception
      * @throws UserAuthorizeException_Exception
+     * @throws IEWSException_Exception
      */
     @WebMethod
     @WebResult(name = "getRipStatusInfo", targetNamespace = "")
@@ -416,8 +416,8 @@ public interface IEWebServices {
      * @param pdsHandle
      * @return
      *     returns java.lang.String
-     * @throws IEWSException_Exception
      * @throws UserAuthorizeException_Exception
+     * @throws IEWSException_Exception
      */
     @WebMethod
     @WebResult(name = "getIERepresentations", targetNamespace = "")
@@ -439,8 +439,8 @@ public interface IEWebServices {
      * @param pdsHandle
      * @return
      *     returns com.exlibris.dps.MetaData
-     * @throws InvalidMIDException_Exception
      * @throws UserAuthorizeException_Exception
+     * @throws InvalidMIDException_Exception
      */
     @WebMethod
     @WebResult(name = "getSharedMDByMid", targetNamespace = "")
@@ -460,10 +460,10 @@ public interface IEWebServices {
      * @param pid
      * @param pdsHandle
      * @throws LockedIeException_Exception
-     * @throws IEWSException_Exception
-     * @throws NotInPermanentException_Exception
      * @throws UserAuthorizeException_Exception
+     * @throws IEWSException_Exception
      * @throws InvalidTypeException_Exception
+     * @throws NotInPermanentException_Exception
      */
     @WebMethod
     @RequestWrapper(localName = "unassignCMS", targetNamespace = "http://dps.exlibris.com/", className = "com.exlibris.dps.UnassignCMS")
@@ -484,11 +484,11 @@ public interface IEWebServices {
      * @param mid
      * @param pid
      * @param pdsHandle
+     * @throws UserAuthorizeException_Exception
      * @throws LockedIeException_Exception
      * @throws IEWSException_Exception
-     * @throws NotInPermanentException_Exception
      * @throws InvalidMIDException_Exception
-     * @throws UserAuthorizeException_Exception
+     * @throws NotInPermanentException_Exception
      */
     @WebMethod
     @RequestWrapper(localName = "unassignSharedMD", targetNamespace = "http://dps.exlibris.com/", className = "com.exlibris.dps.UnassignSharedMD")
@@ -509,8 +509,8 @@ public interface IEWebServices {
      * 
      * @param mid
      * @param pdsHandle
-     * @throws InvalidMIDException_Exception
      * @throws UserAuthorizeException_Exception
+     * @throws InvalidMIDException_Exception
      */
     @WebMethod
     @RequestWrapper(localName = "deleteSharedMD", targetNamespace = "http://dps.exlibris.com/", className = "com.exlibris.dps.DeleteSharedMD")
@@ -529,9 +529,9 @@ public interface IEWebServices {
      * @param pdsHandle
      * @return
      *     returns java.lang.String
+     * @throws UserAuthorizeException_Exception
      * @throws IEWSException_Exception
      * @throws NotInPermanentException_Exception
-     * @throws UserAuthorizeException_Exception
      */
     @WebMethod
     @WebResult(name = "getIEMD", targetNamespace = "")
@@ -553,11 +553,11 @@ public interface IEWebServices {
      * @param pdsHandle
      * @param cmsRecordId
      * @throws LockedIeException_Exception
-     * @throws IEWSException_Exception
-     * @throws NotInPermanentException_Exception
-     * @throws InvalidCMSSystemException_Exception
      * @throws UserAuthorizeException_Exception
+     * @throws InvalidCMSSystemException_Exception
+     * @throws IEWSException_Exception
      * @throws InvalidTypeException_Exception
+     * @throws NotInPermanentException_Exception
      */
     @WebMethod
     @RequestWrapper(localName = "assignCMS", targetNamespace = "http://dps.exlibris.com/", className = "com.exlibris.dps.AssignCMS")
@@ -582,8 +582,8 @@ public interface IEWebServices {
      * @param pdsHandle
      * @return
      *     returns java.lang.String
-     * @throws IEWSException_Exception
      * @throws UserAuthorizeException_Exception
+     * @throws IEWSException_Exception
      */
     @WebMethod
     @WebResult(name = "getRipStatus", targetNamespace = "")
@@ -612,14 +612,14 @@ public interface IEWebServices {
      * @param arPolicyID
      * @return
      *     returns long
+     * @throws FixityEventException_Exception
+     * @throws InvalidXmlException_Exception
+     * @throws UserAuthorizeException_Exception
      * @throws LockedIeException_Exception
      * @throws IEWSException_Exception
-     * @throws FixityEventException_Exception
-     * @throws NotInPermanentException_Exception
      * @throws InvalidMIDException_Exception
-     * @throws UserAuthorizeException_Exception
      * @throws InvalidTypeException_Exception
-     * @throws InvalidXmlException_Exception
+     * @throws NotInPermanentException_Exception
      */
     @WebMethod
     @WebResult(name = "addRepresentation", targetNamespace = "")
@@ -658,10 +658,10 @@ public interface IEWebServices {
      * @param pdsHandle
      * @return
      *     returns com.exlibris.dps.IeStatusInfo
+     * @throws UserAuthorizeException_Exception
      * @throws LockedIeException_Exception
      * @throws IEWSException_Exception
      * @throws NotInPermanentException_Exception
-     * @throws UserAuthorizeException_Exception
      */
     @WebMethod
     @WebResult(name = "manageIE", targetNamespace = "")
