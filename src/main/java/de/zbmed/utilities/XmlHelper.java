@@ -61,6 +61,18 @@ public class XmlHelper {
 		return null;
 	}
 	
+	public static Node getFirstChildByNameWithTextContains(Node parent, String name, String contains) {
+		Node node = parent.getFirstChild();
+		while (node != null) {
+			if (node.getNodeName() != null && node.getNodeName().contentEquals(name)) {
+				String text = node.getTextContent();
+				if (text.contains(contains)) return node;
+			}
+			node = node.getNextSibling();
+		}
+		return null;
+	}
+	
 	public static Node getFirstChildByNameWithAttrValue(Node parent, String name, String attr, String value) {
 		Node node = parent.getFirstChild();
 		while (node != null) {
@@ -89,6 +101,24 @@ public class XmlHelper {
 			node = node.getNextSibling();
 		}
 		return null;
+	}
+	
+	public static List<String> getListOfAttributeValuesOfTags(Node parent, String name, String attr) {
+		List<String> list = new Stack<String>();
+		Node node = parent.getFirstChild();
+		while (node != null) {
+			String nodeName = node.getNodeName();
+			if (nodeName != null && nodeName.contentEquals(name)) {
+				NamedNodeMap nnm = node.getAttributes();
+				Node item = nnm.getNamedItem(attr);
+				String value = item.getNodeValue();
+				if (value != null) {
+					list.add(value);
+				}
+			}
+			node = node.getNextSibling();
+		}
+		return list;
 	}
 	
 	public static Node newNode(Document doc, String name) {

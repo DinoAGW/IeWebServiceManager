@@ -3,6 +3,7 @@ package de.zbmed.utilities;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -126,11 +127,21 @@ public class IeHelper {
 		final String password = defaultPassword(rosettaInstance);
 		final String IE_WSDL_URL = defaultIE_WSDL_URL(rosettaURL);
 
-		IEWebServices_Service ieWS = new IEWebServices_Service(new URL(IE_WSDL_URL),
-				new QName("http://dps.exlibris.com/", "IEWebServices"));
-		ieWS.setHandlerResolver(new HeaderHandlerResolver(userName, password, institution));
+		String retval = null;
+		int tried = 0;
+		while (retval == null) {
+			try {
+				IEWebServices_Service ieWS = new IEWebServices_Service(new URL(IE_WSDL_URL),
+						new QName("http://dps.exlibris.com/", "IEWebServices"));
+				ieWS.setHandlerResolver(new HeaderHandlerResolver(userName, password, institution));
 
-		String retval = ieWS.getIEWebServicesPort().getMD(null, iePid, null, null, null);
+				retval = ieWS.getIEWebServicesPort().getMD(null, iePid, null, null, null);
+			} catch (Exception e) {
+				++tried;
+				if (tried == 10)
+					throw e;
+			}
+		}
 		return retval;
 	}
 
@@ -220,7 +231,8 @@ public class IeHelper {
 	}
 
 	public static String changeIeAmd(String md, String von, String nach) {
-		return md.replace("<" + von + ">", "<" + nach + ">").replace("</" + von + ">", "</" + nach + ">").replace("<" + von + "/>", "<" + nach + "/>");
+		return md.replace("<" + von + ">", "<" + nach + ">").replace("</" + von + ">", "</" + nach + ">")
+				.replace("<" + von + "/>", "<" + nach + "/>");
 	}
 
 	public static String getIeDmdMid(String md) throws Exception {
@@ -236,7 +248,7 @@ public class IeHelper {
 	}
 
 	public static void updateUserDefined(String iePid, String rosettaInstance, String ABorC, String wert,
-			Boolean commit) throws Exception {
+			Boolean commit, String md) throws Exception {
 		if (!ABorC.contentEquals("A") && !ABorC.contentEquals("B") && !ABorC.contentEquals("C"))
 			throw new Exception("ABorC sollte A, B oder C sein, ist aber '" + ABorC + "'");
 
@@ -246,13 +258,39 @@ public class IeHelper {
 		final String password = defaultPassword(rosettaInstance);
 		final String IE_WSDL_URL = defaultIE_WSDL_URL(rosettaURL);
 
+		if (md == null) md = getMD(iePid, rosettaInstance);
+
 		IEWebServices_Service ieWS = new IEWebServices_Service(new URL(IE_WSDL_URL),
 				new QName("http://dps.exlibris.com/", "IEWebServices"));
 		ieWS.setHandlerResolver(new HeaderHandlerResolver(userName, password, institution));
 
-		String md = getMD(iePid, rosettaInstance);
-
 		ieWS.getIEWebServicesPort().updateDNX(commit, changeUserDefined2(md, ABorC, wert), iePid, null);
+	}
+
+	public static boolean existiertDatei(String iePid, String rosettaInstance, String dateiname) throws Exception {
+		String md = getIE(iePid, rosettaInstance);
+		Document doc = XmlHelper.parse(md);
+		Node node = doc;
+		Node mets = XmlHelper.getFirstChildByName(node, "mets:mets");
+		List<String> fileAmds = XmlHelper.getListOfAttributeValuesOfTags(mets, "mets:amdSec", "ID");
+		for (String amd : fileAmds) {
+			if (!amd.startsWith("FL"))
+				continue;
+			node = XmlHelper.getFirstChildByNameWithAttrValue(mets, "mets:amdSec", "ID", amd);
+			node = XmlHelper.getFirstChildByName(node, "mets:techMD");
+			node = XmlHelper.getFirstChildByName(node, "mets:mdWrap");
+			node = XmlHelper.getFirstChildByName(node, "mets:xmlData");
+			node = XmlHelper.getFirstChildByName(node, "dnx");
+			node = XmlHelper.getFirstChildByNameWithAttrValue(node, "section", "id", "generalFileCharacteristics");
+			node = XmlHelper.getFirstChildByName(node, "record");
+			node = XmlHelper.getFirstChildByNameWithAttrValue(node, "key", "id", "fileOriginalName");
+			if (node.getTextContent().endsWith(dateiname)) {
+				return true;
+			} else {
+//				System.out.println(node.getTextContent() + " -> " + dateiname);
+			}
+		}
+		return false;
 	}
 
 	private static String changeUserDefined2(String md, String ABorC, String wert) throws Exception {
@@ -263,7 +301,7 @@ public class IeHelper {
 		Document doc = XmlHelper.parse(md);
 		String vorher = XmlHelper.getStringFromDocument(doc);
 //		System.out.println(vorher);
-		
+
 		Node node = doc;
 		node = XmlHelper.getFirstChildByName(node, "mets:mets");
 		node = XmlHelper.getFirstChildByNameWithAttrStartsWithValue(node, "mets:amdSec", "ID", "ie-amd");
@@ -272,7 +310,7 @@ public class IeHelper {
 		node = XmlHelper.getFirstChildByName(node, "mets:xmlData");
 		Node dnx = XmlHelper.getFirstChildByName(node, "dnx");
 		Node section = XmlHelper.getFirstChildByNameWithAttrValue(dnx, "section", "id", "generalIECharacteristics");
-		if(section == null) {
+		if (section == null) {
 			section = dnx.appendChild(XmlHelper.newNodeWithAttr(doc, "section", "id", "generalIECharacteristics"));
 		}
 		Node record = XmlHelper.getFirstChildByName(section, "record");
@@ -283,7 +321,7 @@ public class IeHelper {
 		if (key == null) {
 			key = record.appendChild(XmlHelper.newNodeWithAttr(doc, "key", "id", id));
 		}
-		
+
 		key.setTextContent(wert);
 
 		String nachher = XmlHelper.getStringFromDocument(doc);
@@ -402,14 +440,14 @@ public class IeHelper {
 //		System.out.println(getMD(devIe, "dev"));
 		String vorher = getMD(devIe, "dev");
 		System.out.println(vorher);
-		String wert = "anders10";
+		String wert = "anders12";
 //		printDiff(changeUserDefined(vorher, "C", wert), changeUserDefined2(vorher, "C", wert));
 //		System.out.println(changeUserDefined(vorher, "C", wert));
 //		System.out.println(changeUserDefined2(vorher, "C", wert));
 //		System.out.println(lockIE(devIe, "dev"));
 //		System.out.println(rollbackIE(devIe, "dev"));
 //		updateIeAmd(devIe, "dev", "dc:language", "dc:language1", false);
-		updateUserDefined(devIe, "dev", "A", wert, true);
+		updateUserDefined(devIe, "dev", "A", wert, true, null);
 //		System.out.println(getMD(devIe, "dev"));
 //		System.out.println(commitIE(devIe, "dev"));
 //		String nachher = getMD(devIe, "dev");
